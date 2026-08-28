@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="THE RED MAPLE TREE">
+    <meta property="og:description" content="Shelby County - Tree of Life. Interactive mobile experience.">
+    <meta property="og:image" content="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/tree_1f333.png">
+    <meta property="og:url" content="https://billyboy229wb-source.github.io/red-maple-tree/">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>THE RED MAPLE TREE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            padding-top: 40px;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #888888;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .tree-container {
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .tree {
+            font-size: 120px;
+            line-height: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.3));
+            transition: filter 0.3s ease, transform 0.1s ease;
+            transform: scale(1);
+        }
+
+        .tree:active {
+            transform: scale(0.95);
+        }
+
+        .tree.red-mode {
+            filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8)) brightness(1.2);
+        }
+
+        .tree.blue-mode {
+            filter: drop-shadow(0 0 30px rgba(0, 100, 255, 0.8)) brightness(1.2) hue-rotate(240deg);
+        }
+
+        .lyric {
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            text-align: center;
+            height: 40px;
+            color: #ff4444;
+            font-style: italic;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+
+        .lyric.show {
+            opacity: 1;
+        }
+
+        .heat-meter {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+            color: #ff6666;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            margin-top: 20px;
+        }
+
+        .footer {
+            padding-bottom: 40px;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .tap-hint {
+            font-size: 0.9rem;
+            color: #666666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+            margin-bottom: 15px;
+        }
+
+        .share-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #ff0000, #ff4444);
+            color: #000000;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+
+        .share-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+        }
+
+        .share-button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .tree {
+                font-size: 100px;
+            }
+
+            .lyric {
+                font-size: 1.1rem;
+            }
+
+            .heat-meter {
+                font-size: 1.2rem;
+            }
+
+            .share-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">THE RED MAPLE TREE</div>
+            <div class="subtitle">Shelby County - Tree of Life</div>
+        </div>
+
+        <div class="main">
+            <div class="tree-container" id="treeContainer">
+                <div class="tree" id="tree">🌳</div>
+            </div>
+            <div class="lyric" id="lyric"></div>
+            <div class="heat-meter" id="heatMeter">Heat: 0/6</div>
+        </div>
+
+        <div class="footer">
+            <div class="tap-hint">TAP THE TREE</div>
+            <button class="share-button" id="shareBtn">📱 SHARE</button>
+        </div>
+    </div>
+
+    <script>
+        const lyrics = [
+            "Don't mess with me",
+            "Got red deep in these melony blue veins",
+            "Flowing deep",
+            "Hello I am voice of the Mississippi",
+            "Tree Mother of yeah",
+            "I sing sling"
+        ];
+
+        let tapCount = 0;
+        let currentLyricIndex = -1;
+        let isAnimating = false;
+
+        const treeContainer = document.getElementById('treeContainer');
+        const tree = document.getElementById('tree');
+        const lyricElement = document.getElementById('lyric');
+        const heatMeter = document.getElementById('heatMeter');
+        const shareBtn = document.getElementById('shareBtn');
+
+        treeContainer.addEventListener('click', handleTreeTap);
+        shareBtn.addEventListener('click', handleShare);
+
+        function handleTreeTap() {
+            if (isAnimating) return;
+
+            isAnimating = true;
+            tapCount++;
+            currentLyricIndex++;
+
+            // Color cycling: red for odd taps, blue for even taps
+            if (tapCount % 2 === 1) {
+                tree.classList.add('red-mode');
+                tree.classList.remove('blue-mode');
+            } else {
+                tree.classList.add('blue-mode');
+                tree.classList.remove('red-mode');
+            }
+
+            // Update heat meter
+            heatMeter.textContent = `Heat: ${Math.min(tapCount, 6)}/6`;
+
+            // Show lyric if available
+            if (currentLyricIndex < lyrics.length) {
+                showLyric(currentLyricIndex);
+            }
+
+            // Reset animation state
+            setTimeout(() => {
+                isAnimating = false;
+            }, 600);
+        }
+
+        function showLyric(index) {
+            lyricElement.classList.remove('show');
+
+            setTimeout(() => {
+                lyricElement.textContent = lyrics[index];
+                lyricElement.classList.add('show');
+            }, 100);
+        }
+
+        function handleShare() {
+            const shareUrl = window.location.href;
+            const shareText = 'Check out THE RED MAPLE TREE - Shelby County Tree of Life 🌳';
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'THE RED MAPLE TREE',
+                    text: shareText,
+                    url: shareUrl
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: Copy to clipboard and show Facebook share
+                const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+                window.open(facebookUrl, 'facebook-share-dialog', 'width=800,height=600');
+            }
+        }
+    </script>
+</body>
+</html>
